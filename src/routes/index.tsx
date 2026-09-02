@@ -12,7 +12,7 @@ import { useAvatar } from "@/auth/useAvatar";
 
 
 import { useAuth } from "@/auth/AuthProvider";
-import paypalPLogo from "@/assets/paypal-p-balance.jpeg.asset.json";
+import paypalPLogo from "@/assets/paypal-p-balance.jpeg";
 
 export const Route = createFileRoute("/")({
   component: IndexRoute,

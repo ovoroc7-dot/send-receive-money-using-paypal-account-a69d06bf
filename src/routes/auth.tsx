@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import paypalWelcomeLogo from "@/assets/paypal-p-welcome-new.png.asset.json";
+import paypalWelcomeLogo from "@/assets/paypal-p-welcome-new.png";
 import { useAuth } from "@/auth/AuthProvider";
 
 export const Route = createFileRoute("/auth")({

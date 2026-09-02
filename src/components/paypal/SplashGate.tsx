@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { useLocation } from "@tanstack/react-router";
-import splashArt from "@/assets/paypal-splash.jpg.asset.json";
+import splashArt from "@/assets/paypal-splash.jpg";
 
 const SEEN_KEY = "pp_splash_seen";
 
