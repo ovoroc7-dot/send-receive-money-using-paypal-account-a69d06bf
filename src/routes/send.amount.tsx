@@ -56,7 +56,7 @@ function SendAmountPage() {
   const [stage, setStage] = useState<Stage>("amount");
   const [showReview, setShowReview] = useState(false);
   const [note, setNote] = useState("");
-  const [status, setStatus] = useState<"pending" | "completed">("completed");
+  const status = "pending" as const;
 
   const numeric = useMemo(() => Number.parseFloat(raw || "0") || 0, [raw]);
   const canNext = numeric > 0;
@@ -196,8 +196,6 @@ function SendAmountPage() {
         <ReviewSheet
           amount={numeric}
           to={to}
-          status={status}
-          onStatusChange={setStatus}
           onClose={() => setShowReview(false)}
           onConfirm={submit}
         />
@@ -275,15 +273,11 @@ function NumKey({ children, onPress }: { children: React.ReactNode; onPress: () 
 function ReviewSheet({
   amount,
   to,
-  status,
-  onStatusChange,
   onClose,
   onConfirm,
 }: {
   amount: number;
   to: string;
-  status: "pending" | "completed";
-  onStatusChange: (v: "pending" | "completed") => void;
   onClose: () => void;
   onConfirm: () => void;
 }) {
@@ -365,34 +359,6 @@ function ReviewSheet({
           <Row left={<span className="flex items-center gap-1.5">PayPal fee <Info size={14} className="text-[var(--pp-text-muted)]" /></span>} right={`${fmtUSD(fee)} USD`} muted />
           <Row left="Total" right={`${fmtUSD(total)} USD`} bold />
           <Row left="Payment delivery" right="In seconds" muted />
-        </div>
-
-        <div className="px-5 mt-4">
-          <p className="text-[13px] text-[var(--pp-text-muted)] mb-2">Payment status</p>
-          <div className="flex rounded-full bg-[var(--pp-bg)] p-1">
-            <button
-              type="button"
-              onClick={() => onStatusChange("pending")}
-              className={`flex-1 rounded-full py-2 text-[14px] font-semibold transition-colors ${
-                status === "pending"
-                  ? "bg-white text-[var(--pp-text)] shadow-sm"
-                  : "text-[var(--pp-text-muted)]"
-              }`}
-            >
-              Pending
-            </button>
-            <button
-              type="button"
-              onClick={() => onStatusChange("completed")}
-              className={`flex-1 rounded-full py-2 text-[14px] font-semibold transition-colors ${
-                status === "completed"
-                  ? "bg-white text-[var(--pp-text)] shadow-sm"
-                  : "text-[var(--pp-text-muted)]"
-              }`}
-            >
-              Completed
-            </button>
-          </div>
         </div>
 
         <div className="px-5 mt-5">
