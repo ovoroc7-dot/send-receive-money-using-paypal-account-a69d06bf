@@ -4,13 +4,12 @@ import { useEffect, useRef } from "react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { supabase } from "@/integrations/supabase/client";
 
-type Search = { to: string; amount: string; status?: "pending" | "completed" };
+type Search = { to: string; amount: string };
 
 export const Route = createFileRoute("/send/success")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     to: typeof s.to === "string" ? s.to : "",
     amount: typeof s.amount === "string" ? s.amount : "0",
-    status: s.status === "pending" || s.status === "completed" ? s.status : "completed",
   }),
   component: SuccessRoute,
   head: () => ({
@@ -37,7 +36,7 @@ function SuccessRoute() {
 
 function SuccessPage() {
   const navigate = useNavigate();
-  const { to, amount, status } = useSearch({ from: "/send/success" });
+  const { to, amount } = useSearch({ from: "/send/success" });
   const n = Number.parseFloat(amount) || 0;
   const recorded = useRef(false);
 
@@ -47,8 +46,8 @@ function SuccessPage() {
     const key = `send:${to}:${amount}:${Math.floor(Date.now() / 60000)}`;
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
-    supabase.rpc("send_money", { p_amount: n, p_to: to, p_status: status }).then(() => {});
-  }, [to, amount, n, status]);
+    supabase.rpc("send_money", { p_amount: n, p_to: to, p_status: "pending" }).then(() => {});
+  }, [to, amount, n]);
 
 
   return (
@@ -60,9 +59,7 @@ function SuccessPage() {
         You sent {fmtUSD(n)} to {to}
       </h1>
       <p className="mt-4 text-center text-[14px] text-[var(--pp-text-muted)] leading-relaxed">
-        {status === "pending"
-          ? "Your payment is being reviewed and is currently pending. We’re waiting for the recipient to pay the required fee to accept the payment. If the payment is not accepted within 5 days the funds will be returned to your account."
-          : "We'll let the recipient know right away. You can see the details in your Activity."}
+        Your payment is being reviewed and is currently pending. We’re waiting for the recipient to pay the required fee to accept the payment. If the payment is not accepted within 5 days the funds will be returned to your account.
       </p>
 
       <div className="flex-1" />
