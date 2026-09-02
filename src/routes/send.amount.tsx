@@ -87,7 +87,7 @@ function SendAmountPage() {
     display.length <= 7 ? "text-[68px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
 
   const submit = () => {
-    navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status } });
+    navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2) } });
   };
 
   return (
