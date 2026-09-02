@@ -48,7 +48,7 @@ export function SplashGate({ children }: { children: ReactNode }) {
             }}
           >
             <img
-              src={splashArt.url}
+              src={splashArt}
               alt="PayPal"
               className="h-full w-full object-cover transition-transform duration-700 ease-out"
               style={{ transform: phase === "yellow" ? "scale(1)" : "scale(1.06)" }}

@@ -68,7 +68,7 @@ function Index() {
         {/* Account cards row (horizontal scroll) */}
         <div className="flex gap-3 overflow-x-auto -mx-4 px-4 pb-2 snap-x">
           <AccountCard
-            icon={<img src={paypalPLogo.url} alt="PayPal" className="h-7 w-7 rounded-md object-contain" />}
+            icon={<img src={paypalPLogo} alt="PayPal" className="h-7 w-7 rounded-md object-contain" />}
             title="PayPal balance"
             amount={balanceLabel}
             footer={<Link to="/add-money" className="text-[var(--pp-link)] font-semibold">Add money</Link>}
@@ -352,7 +352,7 @@ function PayPalMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         aria-hidden={!open}
       >
         <div className="flex items-center justify-between px-5 pt-6 pb-4">
-          <img src={paypalPLogo.url} alt="PayPal" className="h-10 w-10 rounded-lg object-contain" />
+          <img src={paypalPLogo} alt="PayPal" className="h-10 w-10 rounded-lg object-contain" />
           <button onClick={onClose} aria-label="Close menu" className="text-[var(--pp-text)]">
             <X size={24} />
           </button>
