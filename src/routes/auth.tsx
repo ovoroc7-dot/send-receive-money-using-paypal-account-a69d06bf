@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import paypalWelcomeLogo from "@/assets/paypal-p-welcome-new.png.asset.json";
+import paypalWelcomeLogo from "@/assets/paypal-p-welcome-new.png";
 import { useAuth } from "@/auth/AuthProvider";
 
 export const Route = createFileRoute("/auth")({
@@ -51,7 +51,7 @@ function AuthPage() {
     <div className="min-h-screen flex flex-col bg-white">
       <main className="flex-1 flex flex-col px-7 pt-16">
         <div className="flex justify-center">
-          <img src={paypalWelcomeLogo.url} alt="PayPal" className="h-16 w-16 object-contain" />
+          <img src={paypalWelcomeLogo} alt="PayPal" className="h-16 w-16 object-contain" />
         </div>
         <h1 className="mt-6 text-center text-[28px] font-semibold text-[var(--pp-text)]">
           {mode === "signin" ? "Welcome back" : "Create your account"}
