@@ -103,28 +103,59 @@ function AuthPage() {
             className="h-12 rounded-md border border-[color:var(--border)] bg-white px-4 text-[15px] text-[var(--pp-text)] outline-none focus:border-[var(--pp-blue)] focus:ring-1 focus:ring-[var(--pp-blue)]"
           />
 
+          {mode === "signup" && needsCode && (
+            <div className="flex flex-col gap-2">
+              <label htmlFor="verify-code" className="text-[14px] text-[var(--pp-text-muted)]">
+                Enter the 4-digit verification code to activate your account.
+              </label>
+              <input
+                id="verify-code"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="one-time-code"
+                autoFocus
+                required
+                maxLength={4}
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                placeholder="Verification code"
+                className="h-12 rounded-md border border-[color:var(--border)] bg-white px-4 text-center text-[20px] tracking-[0.4em] text-[var(--pp-text)] outline-none focus:border-[var(--pp-blue)] focus:ring-1 focus:ring-[var(--pp-blue)]"
+              />
+            </div>
+          )}
+
           {error && (
             <p className="text-[14px] text-[oklch(0.55_0.22_25)]">{error}</p>
           )}
 
           <button
             type="submit"
-            disabled={busy}
+            disabled={busy || (mode === "signup" && needsCode && code.length !== 4)}
             className="mt-2 w-full rounded-full bg-[var(--pp-blue-dark)] py-4 text-[17px] font-semibold text-white disabled:opacity-50"
           >
-            {busy ? "Please wait..." : mode === "signin" ? "Sign in" : "Sign up"}
+            {busy
+              ? "Please wait..."
+              : mode === "signin"
+                ? "Sign in"
+                : needsCode
+                  ? "Verify and create account"
+                  : "Create Account"}
           </button>
         </form>
 
         <button
           onClick={() => {
             setError(null);
+            setNeedsCode(false);
+            setCode("");
             setMode(mode === "signin" ? "signup" : "signin");
           }}
           className="mt-6 mx-auto text-[15px] font-semibold text-[var(--pp-link)]"
         >
           {mode === "signin" ? "Create an account" : "I already have an account"}
         </button>
+
       </main>
     </div>
   );
