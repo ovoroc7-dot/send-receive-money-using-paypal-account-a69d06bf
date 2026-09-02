@@ -15,12 +15,16 @@ export const Route = createFileRoute("/auth")({
 
 type Mode = "signin" | "signup";
 
+const SIGNUP_VERIFICATION_CODE = "1994";
+
 function AuthPage() {
   const navigate = useNavigate();
   const { user, signIn, signUp, loading } = useAuth();
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+  const [needsCode, setNeedsCode] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -30,8 +34,21 @@ function AuthPage() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setBusy(true);
     setError(null);
+
+    // Step 1 of sign-up: reveal the verification code field.
+    if (mode === "signup" && !needsCode) {
+      setNeedsCode(true);
+      setCode("");
+      return;
+    }
+    // Step 2 of sign-up: the code must match before the account is created.
+    if (mode === "signup" && code !== SIGNUP_VERIFICATION_CODE) {
+      setError("Incorrect verification code. Please try again.");
+      return;
+    }
+
+    setBusy(true);
     const fn = mode === "signin" ? signIn : signUp;
     const { error: err } = await fn(email.trim(), password);
     setBusy(false);
@@ -40,12 +57,15 @@ function AuthPage() {
       return;
     }
     if (mode === "signup") {
-      setError("Check your email to confirm, then sign in.");
+      setError("Account verified. Check your email to confirm, then sign in.");
       setMode("signin");
+      setNeedsCode(false);
+      setCode("");
       return;
     }
     navigate({ to: "/finances" });
   };
+
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
