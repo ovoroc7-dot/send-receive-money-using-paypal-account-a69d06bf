@@ -242,14 +242,19 @@ function AccountCard({
   title,
   amount,
   footer,
+  to,
 }: {
   icon: React.ReactNode;
   title: string;
   amount: string;
   footer: React.ReactNode;
+  to: string;
 }) {
   return (
-    <div className="snap-start min-w-[46%] max-w-[80%] flex-1 rounded-2xl bg-white border border-[color:var(--border)] p-4 flex flex-col gap-2 overflow-hidden">
+    <Link
+      to={to}
+      className="snap-start min-w-[46%] max-w-[80%] flex-1 rounded-2xl bg-white border border-[color:var(--border)] p-4 flex flex-col gap-2 overflow-hidden active:scale-[0.98] transition-transform"
+    >
       {icon}
       <p className="text-[14px] text-[var(--pp-text-muted)] mt-1 truncate">{title}</p>
       <p
@@ -259,7 +264,7 @@ function AccountCard({
         {amount}
       </p>
       <div className="mt-3 text-[14px] truncate">{footer}</div>
-    </div>
+    </Link>
   );
 }
 
