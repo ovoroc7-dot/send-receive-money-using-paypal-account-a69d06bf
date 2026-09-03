@@ -68,12 +68,14 @@ function Index() {
         {/* Account cards row (horizontal scroll) */}
         <div className="flex gap-3 overflow-x-auto -mx-4 px-4 pb-2 snap-x">
           <AccountCard
+            to="/add-money"
             icon={<img src={paypalPLogo} alt="PayPal" className="h-7 w-7 rounded-md object-contain" />}
             title="PayPal balance"
             amount={balanceLabel}
-            footer={<Link to="/add-money" className="text-[var(--pp-link)] font-semibold">Add money</Link>}
+            footer={<span className="text-[var(--pp-link)] font-semibold">Add money</span>}
           />
           <AccountCard
+            to="/activity"
             icon={
               <div className="h-7 w-7 rounded-md bg-[var(--pp-yellow)] flex items-center justify-center">
                 <Clock size={16} strokeWidth={2.5} className="text-[var(--pp-text)]" />
@@ -82,13 +84,14 @@ function Index() {
             title="Money on hold"
             amount={onHoldLabel}
             footer={
-              <Link to="/activity" className="text-[var(--pp-link)] font-semibold">
+              <span className="text-[var(--pp-link)] font-semibold">
                 View details
-              </Link>
+              </span>
             }
           />
 
           <AccountCard
+            to="/transfer/savings"
             icon={
               <div className="h-7 w-7 rounded-md bg-[var(--pp-blue)] flex items-center justify-center">
                 <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" fill="currentColor">
