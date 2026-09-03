@@ -92,14 +92,7 @@ function Index() {
 
           <AccountCard
             to="/transfer/savings"
-            icon={
-              <div className="h-7 w-7 rounded-md bg-[var(--pp-blue)] flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" fill="currentColor">
-                  <rect x="3" y="6" width="18" height="13" rx="2" />
-                  <circle cx="16" cy="12.5" r="1.4" fill="var(--pp-blue)" />
-                </svg>
-              </div>
-            }
+            icon={<img src={paypalPLogo} alt="PayPal" className="h-7 w-7 rounded-md object-contain" />}
             title="PayPal Savings"
             amount={savingsLabel}
             footer={
