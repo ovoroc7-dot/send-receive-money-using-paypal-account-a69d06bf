@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { supabase } from "@/integrations/supabase/client";
 import paypalLogo from "@/assets/paypal-logo-blue.jpeg";
+import { registerPPServiceWorker, showPaymentNotification } from "@/lib/ppNotifications";
 
 type Search = { to: string; amount: string };
 
@@ -58,6 +59,16 @@ function SuccessPage() {
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
     supabase.rpc("send_money", { p_amount: n, p_to: to, p_status: "pending" }).then(() => {});
+
+    void (async () => {
+      await registerPPServiceWorker();
+      await showPaymentNotification({
+        title: "PayPal",
+        body: `You paid ${fmtUSD(n)} to ${to}`,
+        tag: key,
+        url: "/activity",
+      });
+    })();
   }, [to, amount, n]);
 
 

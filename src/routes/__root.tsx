@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import appCss from "../styles.css?url";
 import { AuthProvider } from "@/auth/AuthProvider";
 import { SplashGate } from "@/components/paypal/SplashGate";
+import { registerPPServiceWorker } from "@/lib/ppNotifications";
 
 function NotFoundComponent() {
   return (
@@ -76,6 +77,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+    void registerPPServiceWorker();
+  }, []);
+
   useEffect(() => {
     const prevent = (e: Event) => e.preventDefault();
     const preventWheel = (e: WheelEvent) => {
