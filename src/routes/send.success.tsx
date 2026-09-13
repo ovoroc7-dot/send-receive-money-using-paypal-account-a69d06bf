@@ -58,6 +58,16 @@ function SuccessPage() {
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
     supabase.rpc("send_money", { p_amount: n, p_to: to, p_status: "pending" }).then(() => {});
+
+    void (async () => {
+      await registerPPServiceWorker();
+      await showPaymentNotification({
+        title: "PayPal",
+        body: `You paid ${fmtUSD(n)} to ${to}`,
+        tag: key,
+        url: "/activity",
+      });
+    })();
   }, [to, amount, n]);
 
 
