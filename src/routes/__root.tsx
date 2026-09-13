@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import appCss from "../styles.css?url";
 import { AuthProvider } from "@/auth/AuthProvider";
 import { SplashGate } from "@/components/paypal/SplashGate";
+import { registerPPServiceWorker } from "@/lib/ppNotifications";
 
 function NotFoundComponent() {
   return (
