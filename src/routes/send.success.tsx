@@ -40,6 +40,16 @@ function SuccessPage() {
   const { to, amount } = useSearch({ from: "/send/success" });
   const n = Number.parseFloat(amount) || 0;
   const recorded = useRef(false);
+  const [notifyVisible, setNotifyVisible] = useState(false);
+
+  useEffect(() => {
+    const show = setTimeout(() => setNotifyVisible(true), 250);
+    const hide = setTimeout(() => setNotifyVisible(false), 7000);
+    return () => {
+      clearTimeout(show);
+      clearTimeout(hide);
+    };
+  }, []);
 
   useEffect(() => {
     if (recorded.current || !to || n <= 0) return;
