@@ -77,6 +77,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   useEffect(() => {
+    void registerPPServiceWorker();
+  }, []);
+
+  useEffect(() => {
     const prevent = (e: Event) => e.preventDefault();
     const preventWheel = (e: WheelEvent) => {
       if (e.ctrlKey) e.preventDefault();
