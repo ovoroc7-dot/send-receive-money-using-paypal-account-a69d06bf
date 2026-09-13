@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { supabase } from "@/integrations/supabase/client";
+import paypalLogo from "@/assets/paypal-logo-blue.jpeg";
 
 type Search = { to: string; amount: string };
 
@@ -39,6 +40,16 @@ function SuccessPage() {
   const { to, amount } = useSearch({ from: "/send/success" });
   const n = Number.parseFloat(amount) || 0;
   const recorded = useRef(false);
+  const [notifyVisible, setNotifyVisible] = useState(false);
+
+  useEffect(() => {
+    const show = setTimeout(() => setNotifyVisible(true), 250);
+    const hide = setTimeout(() => setNotifyVisible(false), 7000);
+    return () => {
+      clearTimeout(show);
+      clearTimeout(hide);
+    };
+  }, []);
 
   useEffect(() => {
     if (recorded.current || !to || n <= 0) return;
@@ -51,7 +62,32 @@ function SuccessPage() {
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-white px-6 pt-16 pb-10">
+    <div className="relative min-h-screen flex flex-col bg-white px-6 pt-16 pb-10">
+      <div
+        className={`pointer-events-none fixed left-3 right-3 top-3 z-50 transition-all duration-300 ${
+          notifyVisible ? "translate-y-0 opacity-100" : "-translate-y-6 opacity-0"
+        }`}
+        role="status"
+        aria-live="polite"
+      >
+        <div className="flex items-center gap-3 rounded-2xl bg-[var(--pp-text)]/90 px-3.5 py-3 shadow-lg backdrop-blur">
+          <img
+            src={paypalLogo}
+            alt="PayPal"
+            className="h-9 w-9 shrink-0 rounded-[10px] object-cover"
+          />
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[13px] font-semibold text-white">PayPal</span>
+              <span className="text-[12px] text-white/70">now</span>
+            </div>
+            <p className="mt-0.5 truncate text-[13px] text-white/90">
+              You paid {fmtUSD(n)} to {to}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto h-16 w-16 rounded-full bg-[var(--pp-yellow)] flex items-center justify-center">
         <Check size={32} strokeWidth={3} className="text-[var(--pp-blue-dark)]" />
       </div>
