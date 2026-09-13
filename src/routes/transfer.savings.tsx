@@ -4,6 +4,7 @@ import { X, Delete, PiggyBank } from "lucide-react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
 import { useSavings } from "@/auth/useSavings";
+import paypalLogo from "@/assets/paypal-logo-blue.jpeg";
 
 export const Route = createFileRoute("/transfer/savings")({
   component: () => (
@@ -145,9 +146,11 @@ function TransferSavingsPage() {
         {/* From / To */}
         <div className="mt-8 rounded-2xl border border-[color:var(--border)] divide-y divide-[color:var(--border)] bg-white">
           <div className="flex items-center gap-4 px-4 py-4">
-            <div className="h-10 w-10 rounded-full bg-[var(--pp-bg)] flex items-center justify-center">
-              <span className="text-[13px] font-bold text-[var(--pp-blue-dark)]">PP</span>
-            </div>
+            <img
+              src={paypalLogo}
+              alt="PayPal"
+              className="h-10 w-10 rounded-full object-cover"
+            />
             <div className="flex-1">
               <p className="text-[12px] text-[var(--pp-text-muted)]">From</p>
               <p className="text-[15px] font-semibold text-[var(--pp-text)]">PayPal Balance</p>
