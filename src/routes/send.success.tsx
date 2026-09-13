@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { supabase } from "@/integrations/supabase/client";
 import paypalLogo from "@/assets/paypal-logo-blue.jpeg";
+import { registerPPServiceWorker, showPaymentNotification } from "@/lib/ppNotifications";
 
 type Search = { to: string; amount: string };
 
