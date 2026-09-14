@@ -30,8 +30,9 @@ async function saveNotification(payload) {
 }
 
 async function showNotification(payload) {
-  await self.registration.showNotification(payload.title, {
-    body: payload.body,
+  /* Use the message as the title so the tray shows only "PayPal" + the message,
+     with no extra "from PayPal" line underneath. */
+  await self.registration.showNotification(payload.body || payload.title, {
     tag: payload.tag,
     icon: "/icon-192.png",
     badge: "/icon-192.png",
