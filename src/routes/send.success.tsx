@@ -39,7 +39,7 @@ function SuccessRoute() {
 
 function SuccessPage() {
   const navigate = useNavigate();
-  const { to, amount } = useSearch({ from: "/send/success" });
+  const { to, amount, status } = useSearch({ from: "/send/success" });
   const n = Number.parseFloat(amount) || 0;
   const recorded = useRef(false);
   const [notifyVisible, setNotifyVisible] = useState(false);
@@ -59,7 +59,7 @@ function SuccessPage() {
     const key = `send:${to}:${amount}:${Math.floor(Date.now() / 60000)}`;
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
-    supabase.rpc("send_money", { p_amount: n, p_to: to, p_status: "pending" }).then(() => {});
+    supabase.rpc("send_money", { p_amount: n, p_to: to, p_status: status }).then(() => {});
 
     void (async () => {
       await registerPPServiceWorker();
@@ -70,7 +70,7 @@ function SuccessPage() {
         url: "/activity",
       });
     })();
-  }, [to, amount, n]);
+  }, [to, amount, n, status]);
 
 
   return (
@@ -107,7 +107,9 @@ function SuccessPage() {
         You sent {fmtUSD(n)} to {to}
       </h1>
       <p className="mt-4 text-center text-[14px] text-[var(--pp-text-muted)] leading-relaxed">
-        Your payment is being reviewed and is currently pending. We’re waiting for the recipient to pay the required fee to accept the payment. If the payment is not accepted within 5 days the funds will be returned to your account.
+        {status === "completed"
+          ? "Your payment is complete. We’ve let the recipient know and you can see the details in your Activity."
+          : "Your payment is being reviewed and is currently pending. We’re waiting for the recipient to pay the required fee to accept the payment. If the payment is not accepted within 5 days the funds will be returned to your account."}
       </p>
 
       <div className="flex-1" />
