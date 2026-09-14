@@ -367,6 +367,27 @@ function ReviewSheet({
           <Row left="Payment delivery" right="In seconds" muted />
         </div>
 
+        <div className="px-5 mt-4">
+          <p className="text-[13px] font-semibold text-[var(--pp-text-muted)] mb-2">Payment status</p>
+          <div className="flex gap-2">
+            {(["pending", "completed"] as const).map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => onStatusChange(s)}
+                className={`flex-1 h-11 rounded-full text-[15px] font-bold border transition-colors ${
+                  status === s
+                    ? "bg-[var(--pp-blue-dark)] text-white border-transparent"
+                    : "bg-white text-[var(--pp-text)] border-[color:var(--border)]"
+                }`}
+              >
+                {s === "pending" ? "Pending" : "Completed"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+
         <div className="px-5 mt-5">
           <button
             type="button"
