@@ -89,7 +89,8 @@ function SendAmountPage() {
     display.length <= 7 ? "text-[68px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
 
   const submit = () => {
-    navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status } });
+    const effective = statusControlEnabled ? status : ("pending" as const);
+    navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status: effective } });
   };
 
   return (
@@ -199,6 +200,7 @@ function SendAmountPage() {
           amount={numeric}
           to={to}
           status={status}
+          statusControlEnabled={statusControlEnabled}
           onStatusChange={setStatus}
           onClose={() => setShowReview(false)}
           onConfirm={submit}
