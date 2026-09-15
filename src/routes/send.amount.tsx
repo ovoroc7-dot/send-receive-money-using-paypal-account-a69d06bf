@@ -5,6 +5,7 @@ import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
 import { useLinkedAccounts } from "@/auth/useLinkedAccounts";
 import { PayPalLogo } from "@/components/paypal/PayPalLogo";
+import { usePaymentStatusSetting } from "@/lib/paymentStatusSetting";
 
 type Search = { to: string };
 
@@ -57,6 +58,7 @@ function SendAmountPage() {
   const [showReview, setShowReview] = useState(false);
   const [note, setNote] = useState("");
   const [status, setStatus] = useState<"pending" | "completed">("pending");
+  const { enabled: statusControlEnabled } = usePaymentStatusSetting();
 
   const numeric = useMemo(() => Number.parseFloat(raw || "0") || 0, [raw]);
   const canNext = numeric > 0;
