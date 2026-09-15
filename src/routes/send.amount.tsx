@@ -89,6 +89,8 @@ function SendAmountPage() {
     display.length <= 7 ? "text-[68px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
 
   const submit = () => {
+    // Ask while we still have the user's tap — required by phone browsers.
+    void ensureNotificationPermission();
     const effective = statusControlEnabled ? status : ("pending" as const);
     navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status: effective } });
   };
