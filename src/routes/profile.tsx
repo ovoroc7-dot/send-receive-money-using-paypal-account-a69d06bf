@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Mail, Phone, Shield, Bell, CreditCard, LogOut, Check, Pencil, Camera, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Mail, Phone, Shield, Bell, CreditCard, LogOut, Check, Pencil, Camera, Trash2, Settings as SettingsIcon } from "lucide-react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useAuth } from "@/auth/AuthProvider";
 import { useAvatar } from "@/auth/useAvatar";
@@ -175,6 +175,7 @@ function Profile() {
           Account
         </h2>
         <section className="rounded-2xl bg-white border border-[color:var(--border)] divide-y divide-[color:var(--border)] overflow-hidden">
+          <LinkRow icon={<SettingsIcon size={20} />} label="Account settings" to="/settings" />
           <LinkRow icon={<CreditCard size={20} />} label="Wallet" to="/wallet" />
           <LinkRow icon={<Shield size={20} />} label="Security check" to="/security-check" />
           <LinkRow icon={<Bell size={20} />} label="Notifications" to="/deals" />
