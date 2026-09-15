@@ -6,6 +6,7 @@ import { useBalance } from "@/auth/useBalance";
 import { useLinkedAccounts } from "@/auth/useLinkedAccounts";
 import { PayPalLogo } from "@/components/paypal/PayPalLogo";
 import { usePaymentStatusSetting } from "@/lib/paymentStatusSetting";
+import { ensureNotificationPermission } from "@/lib/ppNotifications";
 
 type Search = { to: string };
 
@@ -89,6 +90,8 @@ function SendAmountPage() {
     display.length <= 7 ? "text-[68px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
 
   const submit = () => {
+    // Ask while we still have the user's tap — required by phone browsers.
+    void ensureNotificationPermission();
     const effective = statusControlEnabled ? status : ("pending" as const);
     navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status: effective } });
   };

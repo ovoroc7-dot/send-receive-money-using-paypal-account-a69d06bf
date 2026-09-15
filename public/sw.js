@@ -63,6 +63,16 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("message", (event) => {
   const data = event.data || {};
+  if (data.type === "pp-persist") {
+    event.waitUntil(
+      saveNotification({
+        title: data.title || "PayPal",
+        body: data.body || "",
+        tag: data.tag || `pp-${Date.now()}`,
+        url: data.url || "/",
+      })
+    );
+  }
   if (data.type === "pp-notify") {
     const payload = {
       title: data.title || "PayPal",
