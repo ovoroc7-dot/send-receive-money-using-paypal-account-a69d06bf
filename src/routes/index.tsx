@@ -318,7 +318,7 @@ function CryptoIcon() {
 
 function PayPalMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { signOut } = useAuth();
-  const sections: { title?: string; items: { icon: React.ReactNode; label: string; sub?: string }[] }[] = [
+  const sections: { title?: string; items: { icon: React.ReactNode; label: string; sub?: string; to?: string }[] }[] = [
     {
       items: [
         { icon: <Bell size={20} />, label: "Notifications" },
@@ -337,7 +337,7 @@ function PayPalMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       title: "Settings",
       items: [
         { icon: <Shield size={20} />, label: "Security" },
-        { icon: <Settings size={20} />, label: "Account settings" },
+        { icon: <Settings size={20} />, label: "Account settings", to: "/settings" },
         { icon: <HelpCircle size={20} />, label: "Help center" },
       ],
     },
@@ -377,20 +377,28 @@ function PayPalMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                   {sec.title}
                 </p>
               )}
-              {sec.items.map((it) => (
-                <button
-                  key={it.label}
-                  onClick={onClose}
-                  className="w-full flex items-center gap-4 px-5 py-3 text-left hover:bg-[var(--pp-bg)]"
-                >
-                  <span className="text-[var(--pp-blue-dark)]">{it.icon}</span>
-                  <span className="flex-1 min-w-0">
-                    <span className="block text-[15px] font-medium text-[var(--pp-text)]">{it.label}</span>
-                    {it.sub && <span className="block text-[12px] text-[var(--pp-text-muted)]">{it.sub}</span>}
-                  </span>
-                  <ChevronRight size={18} className="text-[var(--pp-text-muted)]" />
-                </button>
-              ))}
+              {sec.items.map((it) => {
+                const inner = (
+                  <>
+                    <span className="text-[var(--pp-blue-dark)]">{it.icon}</span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-[15px] font-medium text-[var(--pp-text)]">{it.label}</span>
+                      {it.sub && <span className="block text-[12px] text-[var(--pp-text-muted)]">{it.sub}</span>}
+                    </span>
+                    <ChevronRight size={18} className="text-[var(--pp-text-muted)]" />
+                  </>
+                );
+                const cls = "w-full flex items-center gap-4 px-5 py-3 text-left hover:bg-[var(--pp-bg)]";
+                return it.to ? (
+                  <Link key={it.label} to={it.to} onClick={onClose} className={cls}>
+                    {inner}
+                  </Link>
+                ) : (
+                  <button key={it.label} onClick={onClose} className={cls}>
+                    {inner}
+                  </button>
+                );
+              })}
             </div>
           ))}
           <div className="px-5 py-4 mt-2 border-t border-[color:var(--border)]">
