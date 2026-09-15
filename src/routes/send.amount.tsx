@@ -280,6 +280,7 @@ function ReviewSheet({
   amount,
   to,
   status,
+  statusControlEnabled,
   onStatusChange,
   onClose,
   onConfirm,
@@ -287,6 +288,7 @@ function ReviewSheet({
   amount: number;
   to: string;
   status: "pending" | "completed";
+  statusControlEnabled: boolean;
   onStatusChange: (v: "pending" | "completed") => void;
   onClose: () => void;
   onConfirm: () => void;
