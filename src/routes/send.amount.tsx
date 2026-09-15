@@ -6,6 +6,7 @@ import { useBalance } from "@/auth/useBalance";
 import { useLinkedAccounts } from "@/auth/useLinkedAccounts";
 import { PayPalLogo } from "@/components/paypal/PayPalLogo";
 import { usePaymentStatusSetting } from "@/lib/paymentStatusSetting";
+import { ensureNotificationPermission } from "@/lib/ppNotifications";
 
 type Search = { to: string };
 
