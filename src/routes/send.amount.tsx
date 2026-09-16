@@ -58,8 +58,7 @@ function SendAmountPage() {
   const [stage, setStage] = useState<Stage>("amount");
   const [showReview, setShowReview] = useState(false);
   const [note, setNote] = useState("");
-  const [status, setStatus] = useState<"pending" | "completed">("pending");
-  const { enabled: statusControlEnabled } = usePaymentStatusSetting();
+  const { effectiveStatus } = usePaymentStatusSetting();
 
   const numeric = useMemo(() => Number.parseFloat(raw || "0") || 0, [raw]);
   const canNext = numeric > 0;
@@ -92,8 +91,10 @@ function SendAmountPage() {
   const submit = () => {
     // Ask while we still have the user's tap — required by phone browsers.
     void ensureNotificationPermission();
-    const effective = statusControlEnabled ? status : ("pending" as const);
-    navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status: effective } });
+    navigate({
+      to: "/send/success",
+      search: { to, amount: numeric.toFixed(2), status: effectiveStatus },
+    });
   };
 
   return (
@@ -202,9 +203,6 @@ function SendAmountPage() {
         <ReviewSheet
           amount={numeric}
           to={to}
-          status={status}
-          statusControlEnabled={statusControlEnabled}
-          onStatusChange={setStatus}
           onClose={() => setShowReview(false)}
           onConfirm={submit}
         />
@@ -282,17 +280,11 @@ function NumKey({ children, onPress }: { children: React.ReactNode; onPress: () 
 function ReviewSheet({
   amount,
   to,
-  status,
-  statusControlEnabled,
-  onStatusChange,
   onClose,
   onConfirm,
 }: {
   amount: number;
   to: string;
-  status: "pending" | "completed";
-  statusControlEnabled: boolean;
-  onStatusChange: (v: "pending" | "completed") => void;
   onClose: () => void;
   onConfirm: () => void;
 }) {
@@ -376,27 +368,6 @@ function ReviewSheet({
           <Row left="Payment delivery" right="In seconds" muted />
         </div>
 
-        {statusControlEnabled && (
-          <div className="px-5 mt-4">
-            <p className="text-[13px] font-semibold text-[var(--pp-text-muted)] mb-2">Payment status</p>
-            <div className="flex gap-2">
-              {(["pending", "completed"] as const).map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => onStatusChange(s)}
-                  className={`flex-1 h-11 rounded-full text-[15px] font-bold border transition-colors ${
-                    status === s
-                      ? "bg-[var(--pp-blue-dark)] text-white border-transparent"
-                      : "bg-white text-[var(--pp-text)] border-[color:var(--border)]"
-                  }`}
-                >
-                  {s === "pending" ? "Pending" : "Completed"}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
 
 
         <div className="px-5 mt-5">

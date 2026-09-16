@@ -28,7 +28,7 @@ function SettingsRoute() {
 
 function Settings() {
   const { user } = useAuth();
-  const { enabled, setEnabled } = usePaymentStatusSetting();
+  const { enabled, setEnabled, status, setStatus } = usePaymentStatusSetting();
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--pp-bg)]">
@@ -57,7 +57,7 @@ function Settings() {
             <div className="flex-1 min-w-0">
               <p className="text-[16px] font-semibold text-[var(--pp-text)]">Payment status control</p>
               <p className="mt-1 text-[13px] text-[var(--pp-text-muted)] leading-relaxed">
-                Turn this on to choose Pending or Completed on the review screen before sending money.
+                Turn this on to set whether the money you send shows as Pending or Completed.
                 Turn it off and every payment is sent as pending, like normal.
               </p>
             </div>
@@ -67,8 +67,33 @@ function Settings() {
               label="Payment status control"
             />
           </div>
+          {enabled && (
+            <div className="mt-4">
+              <p className="text-[13px] font-semibold text-[var(--pp-text-muted)] mb-2">
+                Send payments as
+              </p>
+              <div className="flex gap-2">
+                {(["pending", "completed"] as const).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => setStatus(s)}
+                    className={`flex-1 h-11 rounded-full text-[15px] font-bold border transition-colors ${
+                      status === s
+                        ? "bg-[var(--pp-blue-dark)] text-white border-transparent"
+                        : "bg-white text-[var(--pp-text)] border-[color:var(--border)]"
+                    }`}
+                  >
+                    {s === "pending" ? "Pending" : "Completed"}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           <p className="mt-3 text-[13px] font-semibold" style={{ color: enabled ? "var(--pp-success)" : "var(--pp-text-muted)" }}>
-            {enabled ? "On — you'll pick the status when sending" : "Off — payments send as pending"}
+            {enabled
+              ? `On — payments you send will be ${status === "completed" ? "completed" : "pending"}`
+              : "Off — payments send as pending"}
           </p>
         </section>
 
