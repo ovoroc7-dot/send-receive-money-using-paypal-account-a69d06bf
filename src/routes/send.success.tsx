@@ -86,21 +86,16 @@ function SuccessPage() {
         role="status"
         aria-live="polite"
       >
-        <div className="flex items-center gap-3 rounded-2xl bg-[var(--pp-text)]/90 px-3.5 py-3 shadow-lg backdrop-blur">
+        <div className="flex items-center gap-3 rounded-[22px] bg-[oklch(0.28_0.03_260)]/95 px-3 py-3 shadow-lg backdrop-blur">
           <img
             src={paypalLogo}
             alt="PayPal"
-            className="h-9 w-9 shrink-0 rounded-[10px] object-cover"
+            className="h-9 w-9 shrink-0 rounded-[9px] object-cover"
           />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[13px] font-semibold text-white">PayPal</span>
-              <span className="text-[12px] text-white/70">now</span>
-            </div>
-            <p className="mt-0.5 truncate text-[13px] text-white/90">
-              You paid {fmtUSD(n)} to {to}
-            </p>
-          </div>
+          <p className="min-w-0 flex-1 truncate text-[15px] text-white">
+            You paid {fmtUSD(n)} to {to}
+          </p>
+          <span className="shrink-0 self-start text-[12px] text-white/60">now</span>
         </div>
       </div>
 

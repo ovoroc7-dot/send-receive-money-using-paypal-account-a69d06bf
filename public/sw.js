@@ -30,9 +30,10 @@ async function saveNotification(payload) {
 }
 
 async function showNotification(payload) {
-  /* Use the message as the title so the tray shows only "PayPal" + the message,
-     with no extra "from PayPal" line underneath. */
-  await self.registration.showNotification(payload.body || payload.title, {
+  /* Title "PayPal" + the payment message as the body, matching the phone's
+     Notification Center layout. */
+  await self.registration.showNotification(payload.title || "PayPal", {
+    body: payload.body,
     tag: payload.tag,
     icon: "/icon-192.png",
     badge: "/icon-192.png",
