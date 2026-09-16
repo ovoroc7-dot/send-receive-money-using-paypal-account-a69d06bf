@@ -57,7 +57,7 @@ function Settings() {
             <div className="flex-1 min-w-0">
               <p className="text-[16px] font-semibold text-[var(--pp-text)]">Payment status control</p>
               <p className="mt-1 text-[13px] text-[var(--pp-text-muted)] leading-relaxed">
-                Turn this on to choose Pending or Completed on the review screen before sending money.
+                Turn this on to set whether the money you send shows as Pending or Completed.
                 Turn it off and every payment is sent as pending, like normal.
               </p>
             </div>
