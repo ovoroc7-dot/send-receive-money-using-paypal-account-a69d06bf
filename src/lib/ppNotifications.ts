@@ -59,7 +59,8 @@ export async function showPaymentNotification(opts: {
 
     // Show it straight from the page registration: this works even when the
     // service worker has only just been installed and isn't controlling yet.
-    await reg.showNotification(payload.body || payload.title, {
+    await reg.showNotification(payload.title || "PayPal", {
+      body: payload.body,
       tag: payload.tag,
       icon: "/icon-192.png",
       badge: "/icon-192.png",
