@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
+import { showPaymentNotification } from "@/lib/ppNotifications";
 
 type Search = { amount?: string };
 
@@ -54,7 +55,15 @@ function SuccessPage() {
     ranRef.current = true;
     addMoney(numericAmount).then(({ error: err }) => {
       if (err) setError(err);
-      else setCredited(true);
+      else {
+        setCredited(true);
+        void showPaymentNotification({
+          title: "PayPal",
+          body: `You received ${formatCurrency(numericAmount)}`,
+          tag: `pp-received-${Date.now()}`,
+          url: "/activity",
+        });
+      }
     });
   }, [numericAmount, addMoney]);
 
