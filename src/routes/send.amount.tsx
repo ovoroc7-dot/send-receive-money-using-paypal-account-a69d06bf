@@ -203,9 +203,6 @@ function SendAmountPage() {
         <ReviewSheet
           amount={numeric}
           to={to}
-          status={status}
-          statusControlEnabled={statusControlEnabled}
-          onStatusChange={setStatus}
           onClose={() => setShowReview(false)}
           onConfirm={submit}
         />
@@ -283,17 +280,11 @@ function NumKey({ children, onPress }: { children: React.ReactNode; onPress: () 
 function ReviewSheet({
   amount,
   to,
-  status,
-  statusControlEnabled,
-  onStatusChange,
   onClose,
   onConfirm,
 }: {
   amount: number;
   to: string;
-  status: "pending" | "completed";
-  statusControlEnabled: boolean;
-  onStatusChange: (v: "pending" | "completed") => void;
   onClose: () => void;
   onConfirm: () => void;
 }) {
