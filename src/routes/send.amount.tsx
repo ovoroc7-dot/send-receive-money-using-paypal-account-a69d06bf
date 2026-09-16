@@ -91,8 +91,10 @@ function SendAmountPage() {
   const submit = () => {
     // Ask while we still have the user's tap — required by phone browsers.
     void ensureNotificationPermission();
-    const effective = statusControlEnabled ? status : ("pending" as const);
-    navigate({ to: "/send/success", search: { to, amount: numeric.toFixed(2), status: effective } });
+    navigate({
+      to: "/send/success",
+      search: { to, amount: numeric.toFixed(2), status: effectiveStatus },
+    });
   };
 
   return (
