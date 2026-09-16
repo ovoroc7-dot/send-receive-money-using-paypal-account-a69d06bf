@@ -66,12 +66,13 @@ function SuccessPage() {
 
     void (async () => {
       await registerPPServiceWorker();
-      await showPaymentNotification({
+      const ok = await showPaymentNotification({
         title: "PayPal",
         body: `You paid ${fmtUSD(n)} to ${to}`,
         tag: key,
         url: "/activity",
       });
+      setSystemNotified(ok);
     })();
   }, [to, amount, n, status]);
 
