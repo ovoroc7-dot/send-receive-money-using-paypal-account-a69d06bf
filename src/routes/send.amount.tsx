@@ -58,8 +58,7 @@ function SendAmountPage() {
   const [stage, setStage] = useState<Stage>("amount");
   const [showReview, setShowReview] = useState(false);
   const [note, setNote] = useState("");
-  const [status, setStatus] = useState<"pending" | "completed">("pending");
-  const { enabled: statusControlEnabled } = usePaymentStatusSetting();
+  const { effectiveStatus } = usePaymentStatusSetting();
 
   const numeric = useMemo(() => Number.parseFloat(raw || "0") || 0, [raw]);
   const canNext = numeric > 0;
