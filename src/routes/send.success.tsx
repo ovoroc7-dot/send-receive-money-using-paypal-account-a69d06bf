@@ -43,15 +43,18 @@ function SuccessPage() {
   const n = Number.parseFloat(amount) || 0;
   const recorded = useRef(false);
   const [notifyVisible, setNotifyVisible] = useState(false);
+  const [systemNotified, setSystemNotified] = useState(true);
 
   useEffect(() => {
     const show = setTimeout(() => setNotifyVisible(true), 250);
-    const hide = setTimeout(() => setNotifyVisible(false), 7000);
-    return () => {
-      clearTimeout(show);
-      clearTimeout(hide);
-    };
+    return () => clearTimeout(show);
   }, []);
+
+  useEffect(() => {
+    if (!systemNotified) return;
+    const hide = setTimeout(() => setNotifyVisible(false), 7000);
+    return () => clearTimeout(hide);
+  }, [systemNotified]);
 
   useEffect(() => {
     if (recorded.current || !to || n <= 0) return;
@@ -63,12 +66,13 @@ function SuccessPage() {
 
     void (async () => {
       await registerPPServiceWorker();
-      await showPaymentNotification({
+      const ok = await showPaymentNotification({
         title: "PayPal",
         body: `You paid ${fmtUSD(n)} to ${to}`,
         tag: key,
         url: "/activity",
       });
+      setSystemNotified(ok);
     })();
   }, [to, amount, n, status]);
 
