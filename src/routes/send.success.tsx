@@ -46,15 +46,15 @@ function SuccessPage() {
   const [systemNotified, setSystemNotified] = useState(true);
 
   useEffect(() => {
+    // Only fall back to an in-app banner when the phone didn't show a real one.
+    if (systemNotified) {
+      setNotifyVisible(false);
+      return;
+    }
     const show = setTimeout(() => setNotifyVisible(true), 250);
     return () => clearTimeout(show);
-  }, []);
-
-  useEffect(() => {
-    if (!systemNotified) return;
-    const hide = setTimeout(() => setNotifyVisible(false), 7000);
-    return () => clearTimeout(hide);
   }, [systemNotified]);
+
 
   useEffect(() => {
     if (recorded.current || !to || n <= 0) return;
@@ -86,17 +86,21 @@ function SuccessPage() {
         role="status"
         aria-live="polite"
       >
-        <div className="flex items-center gap-3 rounded-[22px] bg-[oklch(0.28_0.03_260)]/95 px-3 py-3 shadow-lg backdrop-blur">
+        <div className="flex items-start gap-3 rounded-[22px] bg-white/95 px-3 py-3 shadow-lg ring-1 ring-black/5 backdrop-blur">
           <img
             src={paypalLogo}
             alt="PayPal"
-            className="h-9 w-9 shrink-0 rounded-[9px] object-cover"
+            className="h-10 w-10 shrink-0 rounded-[11px] object-cover"
           />
-          <p className="min-w-0 flex-1 truncate text-[15px] text-white">
-            You paid {fmtUSD(n)} to {to}
-          </p>
-          <span className="shrink-0 self-start text-[12px] text-white/60">now</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[15px] font-bold text-[var(--pp-text)]">PayPal</p>
+            <p className="text-[15px] text-[var(--pp-text)] break-words">
+              You paid {fmtUSD(n)} to {to}
+            </p>
+          </div>
+          <span className="shrink-0 text-[13px] text-[var(--pp-text-muted)]">now</span>
         </div>
+
       </div>
 
       <div className="mx-auto h-16 w-16 rounded-full bg-[var(--pp-yellow)] flex items-center justify-center">
