@@ -46,15 +46,15 @@ function SuccessPage() {
   const [systemNotified, setSystemNotified] = useState(true);
 
   useEffect(() => {
+    // Only fall back to an in-app banner when the phone didn't show a real one.
+    if (systemNotified) {
+      setNotifyVisible(false);
+      return;
+    }
     const show = setTimeout(() => setNotifyVisible(true), 250);
     return () => clearTimeout(show);
-  }, []);
-
-  useEffect(() => {
-    if (!systemNotified) return;
-    const hide = setTimeout(() => setNotifyVisible(false), 7000);
-    return () => clearTimeout(hide);
   }, [systemNotified]);
+
 
   useEffect(() => {
     if (recorded.current || !to || n <= 0) return;
