@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Mail, Phone, Shield, Bell, CreditCard, LogOu
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useAuth } from "@/auth/AuthProvider";
 import { useAvatar } from "@/auth/useAvatar";
+import { supabase } from "@/integrations/supabase/client";
 
 
 export const Route = createFileRoute("/profile")({
@@ -45,7 +46,17 @@ function Profile() {
   useEffect(() => {
     setName(localStorage.getItem(NAME_KEY) ?? "");
     setPhone(localStorage.getItem(PHONE_KEY) ?? "");
-  }, []);
+    if (!user) return;
+    void supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        const saved = data?.display_name?.trim();
+        if (saved && !localStorage.getItem(NAME_KEY)) setName(saved);
+      });
+  }, [user]);
 
   const save = () => {
     localStorage.setItem(NAME_KEY, name.trim());
