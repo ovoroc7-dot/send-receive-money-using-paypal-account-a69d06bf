@@ -21,6 +21,8 @@ function AuthPage() {
   const navigate = useNavigate();
   const { user, signIn, signUp, loading } = useAuth();
   const [mode, setMode] = useState<Mode>("signin");
+  const [firstName, setFirstName] = useState("");
+  const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
@@ -49,8 +51,11 @@ function AuthPage() {
     }
 
     setBusy(true);
-    const fn = mode === "signin" ? signIn : signUp;
-    const { error: err } = await fn(email.trim(), password);
+    const displayName = `${firstName.trim()} ${surname.trim()}`.trim();
+    const { error: err } =
+      mode === "signin"
+        ? await signIn(email.trim(), password)
+        : await signUp(email.trim(), password, displayName || undefined);
     setBusy(false);
     if (err) {
       setError(err);
@@ -83,6 +88,28 @@ function AuthPage() {
         </p>
 
         <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-4">
+          {mode === "signup" && (
+            <>
+              <input
+                type="text"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="First name"
+                autoComplete="given-name"
+                className="h-12 rounded-md border border-[color:var(--border)] bg-white px-4 text-[15px] text-[var(--pp-text)] outline-none focus:border-[var(--pp-blue)] focus:ring-1 focus:ring-[var(--pp-blue)]"
+              />
+              <input
+                type="text"
+                required
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+                placeholder="Surname"
+                autoComplete="family-name"
+                className="h-12 rounded-md border border-[color:var(--border)] bg-white px-4 text-[15px] text-[var(--pp-text)] outline-none focus:border-[var(--pp-blue)] focus:ring-1 focus:ring-[var(--pp-blue)]"
+              />
+            </>
+          )}
           <input
             type="email"
             required
