@@ -7,7 +7,7 @@ type AuthState = {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
-  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
+  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
 };
 
@@ -38,11 +38,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       return { error: error?.message ?? null };
     },
-    signUp: async (email, password) => {
+    signUp: async (email, password, displayName) => {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: `${window.location.origin}/finances` },
+        options: {
+          emailRedirectTo: `${window.location.origin}/finances`,
+          data: displayName ? { display_name: displayName } : undefined,
+        },
       });
       return { error: error?.message ?? null };
     },
