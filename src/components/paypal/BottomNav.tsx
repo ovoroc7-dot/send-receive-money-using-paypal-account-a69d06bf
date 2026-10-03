@@ -20,7 +20,7 @@ export function BottomNav() {
       <ul className="flex items-end justify-between">
         {items.map(({ to, label, icon }) => {
           const active = pathname === to;
-          const color = "var(--pp-blue-dark)";
+          const color = "var(--pp-nav-sky, #0284c7)";
           return (
             <li key={to} className="flex-1">
               <Link
