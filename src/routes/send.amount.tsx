@@ -86,7 +86,7 @@ function SendAmountPage() {
 
   const display = `$${fmtAmount(raw)}`;
   const sizeClass =
-    display.length <= 7 ? "text-[58px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
+    display.length <= 7 ? "text-[64px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
 
   const submit = () => {
     // Ask while we still have the user's tap — required by phone browsers.
