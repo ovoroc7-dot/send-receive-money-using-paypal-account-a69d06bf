@@ -72,7 +72,7 @@ function MethodPage() {
 
       <main className="flex-1 px-5 pb-32">
         {/* Amount */}
-        <p className="mt-8 text-center text-[44px] font-semibold text-[var(--pp-text)] leading-none">
+        <p className="mt-8 text-center text-[58px] font-semibold text-[var(--pp-text)] leading-none">
           {displayAmount}
         </p>
 
