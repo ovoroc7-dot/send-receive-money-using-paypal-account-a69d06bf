@@ -124,7 +124,7 @@ function TransferSavingsPage() {
           const display = amount === 0 ? "0" : fmtBig(amount);
           const len = display.length;
           const amountSize =
-            len <= 6 ? "text-[58px]" : len <= 9 ? "text-[52px]" : len <= 12 ? "text-[40px]" : "text-[32px]";
+            len <= 6 ? "text-[64px]" : len <= 9 ? "text-[52px]" : len <= 12 ? "text-[40px]" : "text-[32px]";
           return (
             <div
               role="button"

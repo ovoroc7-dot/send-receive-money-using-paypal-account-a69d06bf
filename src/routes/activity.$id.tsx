@@ -120,7 +120,7 @@ function ReceiptPage() {
         <p className="mt-4 text-[13px] font-semibold text-[var(--pp-text-muted)] uppercase tracking-wide">
           {heroLabel}
         </p>
-        <p className="mt-1 text-[58px] font-bold text-[var(--pp-text)] tracking-tight">
+        <p className="mt-1 text-[40px] font-bold text-[var(--pp-text)] tracking-tight">
           {fmtUSD(t.amount)}
         </p>
         <div className="mt-2 inline-flex items-center gap-1.5 px-3 h-7 rounded-full text-[12px] font-semibold"
