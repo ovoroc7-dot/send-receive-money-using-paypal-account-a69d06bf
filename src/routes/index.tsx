@@ -111,7 +111,7 @@ function Index() {
             </div>
             <p className="text-[14px] text-[var(--pp-text-muted)] mt-1 truncate">Crypto</p>
             <p
-              className="text-[26px] font-semibold text-[var(--pp-text)] leading-tight truncate"
+              className="text-[28px] font-semibold text-[var(--pp-text)] leading-tight truncate"
               title={fmt(cryptoValue)}
             >
               {fmt(cryptoValue)}
@@ -254,7 +254,7 @@ function AccountCard({
       {icon}
       <p className="text-[14px] text-[var(--pp-text-muted)] mt-1 truncate">{title}</p>
       <p
-        className="text-[26px] font-semibold text-[var(--pp-text)] leading-tight truncate"
+        className="text-[28px] font-semibold text-[var(--pp-text)] leading-tight truncate"
         title={amount}
       >
         {amount}
