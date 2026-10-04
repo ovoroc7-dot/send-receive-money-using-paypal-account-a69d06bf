@@ -167,7 +167,7 @@ function TransferBankPage() {
           const len = display.length;
           // Scale: full-size for short, progressively shrink as digits grow
           const amountSize =
-            len <= 6 ? "text-[64px]"
+            len <= 6 ? "text-[58px]"
             : len <= 9 ? "text-[52px]"
             : len <= 12 ? "text-[40px]"
             : len <= 15 ? "text-[32px]"

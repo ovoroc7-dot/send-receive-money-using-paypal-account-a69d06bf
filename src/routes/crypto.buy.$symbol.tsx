@@ -118,7 +118,7 @@ function BuyCrypto() {
         <p className="mt-6 text-center text-[13px] text-[var(--pp-text-muted)]">
           {formatUsd(coin.price, coin.price < 1 ? 4 : 2, coin.price < 1 ? 4 : 2)} per {coin.symbol}
         </p>
-        <p className="mt-2 text-center text-[64px] font-semibold text-[var(--pp-text)] leading-none">
+        <p className="mt-2 text-center text-[58px] font-semibold text-[var(--pp-text)] leading-none">
           ${amount || "0"}
         </p>
         <p className="mt-2 text-center text-[13px] text-[var(--pp-text-muted)]">

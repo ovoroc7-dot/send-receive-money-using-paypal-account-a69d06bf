@@ -88,7 +88,7 @@ function FinancesPage() {
               (() => {
                 const s = displayValue === null ? "—" : formatUsd(displayValue);
                 const len = s.length;
-                if (len <= 9) return "text-[44px]";
+                if (len <= 9) return "text-[58px]";
                 if (len <= 12) return "text-[36px]";
                 if (len <= 15) return "text-[28px]";
                 if (len <= 18) return "text-[22px]";

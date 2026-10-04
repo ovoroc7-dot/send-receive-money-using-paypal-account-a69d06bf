@@ -77,7 +77,7 @@ function AddMoneyPage() {
         onClick={focusInput}
         className="mt-10 flex w-full flex-col items-center px-4 text-center"
       >
-        <div className="relative flex items-center justify-center tabular-nums text-[44px] font-semibold leading-none text-[var(--pp-text)]">
+        <div className="relative flex items-center justify-center tabular-nums text-[58px] font-semibold leading-none text-[var(--pp-text)]">
           <span>$</span>
           {amount === "0" && <span className="pp-caret" aria-hidden="true" />}
           <span className="relative">

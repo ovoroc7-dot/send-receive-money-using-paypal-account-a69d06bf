@@ -92,7 +92,7 @@ function SellCrypto() {
         </p>
 
         <div className="mt-6 flex items-center justify-center gap-3">
-          <p className="text-[56px] font-semibold text-[var(--pp-text)] leading-none">
+          <p className="text-[58px] font-semibold text-[var(--pp-text)] leading-none">
             {inputMode === "usd" ? `$${amount || "0"}` : `${amount || "0"}`}
           </p>
           {inputMode === "coin" && (

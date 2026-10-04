@@ -74,7 +74,7 @@ function RequestAmountPage() {
 
   const display = `$${fmtAmount(raw)}`;
   const sizeClass =
-    display.length <= 7 ? "text-[68px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
+    display.length <= 7 ? "text-[58px]" : display.length <= 10 ? "text-[52px]" : "text-[40px]";
 
   const submit = () => {
     navigate({ to: "/request/success", search: { to, amount: numeric.toFixed(2) } });
