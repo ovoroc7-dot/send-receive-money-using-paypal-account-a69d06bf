@@ -19,13 +19,13 @@ export function BottomNav() {
     <>
     <div aria-hidden className="shrink-0" style={{ height: "calc(68px + env(safe-area-inset-bottom))" }} />
     <nav
-      className="fixed bottom-0 left-0 right-0 z-30 bg-[var(--pp-card)] border-t border-[color:var(--border)] px-2 pt-2 pb-3 overscroll-none select-none"
+      className="fixed bottom-0 left-0 right-0 z-30 bg-[var(--pp-bg)] px-2 pt-2 pb-3 overscroll-none select-none"
       style={{ transform: "translate3d(0,0,0)", touchAction: "none", paddingBottom: "calc(12px + env(safe-area-inset-bottom))", willChange: "transform" }}
     >
       <ul className="flex items-end justify-between">
         {items.map(({ to, label, icon }) => {
           const active = pathname === to;
-          const color = "var(--pp-blue-dark)";
+          const color = active ? "var(--pp-nav-blue)" : "var(--pp-blue-dark)";
           return (
             <li key={to} className="flex-1">
               <Link
@@ -33,12 +33,11 @@ export function BottomNav() {
                 replace
                 preload="intent"
                 resetScroll
-                className="flex flex-col items-center gap-0.5 py-1 select-none"
+                className={"mx-auto flex w-[64px] flex-col items-center gap-0.5 rounded-lg py-1.5 select-none " + (active ? "bg-[var(--pp-nav-active)]" : "")}
                 style={{ color }}
                 aria-label={label}
               >
-                <span className={"flex h-8 w-12 items-center justify-center rounded-xl transition-colors " + (active ? "bg-[var(--pp-nav-active)]" : "")}>
-                <span
+                                <span
                   role="img"
                   aria-hidden
                   className="h-7 w-7 inline-block"
@@ -54,12 +53,11 @@ export function BottomNav() {
                     maskSize: "contain",
                   }}
                 />
-                </span>
                 <span
                   className="text-[11px]"
                   style={{
                     color,
-                    fontWeight: active ? 700 : 500,
+                    fontWeight: 600,
                   }}
                 >
                   {label}
