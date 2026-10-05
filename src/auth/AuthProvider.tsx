@@ -43,7 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/finances`,
+          emailRedirectTo: `${window.location.origin}/`,
           data: displayName ? { display_name: displayName } : undefined,
         },
       });

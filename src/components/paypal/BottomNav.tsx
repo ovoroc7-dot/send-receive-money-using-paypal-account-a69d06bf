@@ -30,10 +30,14 @@ export function BottomNav() {
             <li key={to} className="flex-1">
               <Link
                 to={to}
-                className="flex flex-col items-center gap-1 py-1 select-none"
+                replace
+                preload="intent"
+                resetScroll
+                className="flex flex-col items-center gap-0.5 py-1 select-none"
                 style={{ color }}
                 aria-label={label}
               >
+                <span className={"flex h-8 w-12 items-center justify-center rounded-xl transition-colors " + (active ? "bg-[var(--pp-nav-active)]" : "")}>
                 <span
                   role="img"
                   aria-hidden
@@ -50,6 +54,7 @@ export function BottomNav() {
                     maskSize: "contain",
                   }}
                 />
+                </span>
                 <span
                   className="text-[11px]"
                   style={{

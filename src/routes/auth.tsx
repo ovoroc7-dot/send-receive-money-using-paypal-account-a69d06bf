@@ -31,7 +31,7 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    if (!loading && user) navigate({ to: "/finances" });
+    if (!loading && user) navigate({ to: "/" });
   }, [user, loading, navigate]);
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -68,7 +68,7 @@ function AuthPage() {
       setCode("");
       return;
     }
-    navigate({ to: "/finances" });
+    navigate({ to: "/" });
   };
 
 
