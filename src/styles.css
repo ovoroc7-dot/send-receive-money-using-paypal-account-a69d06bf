@@ -210,3 +210,7 @@ body {
 html, body, input, textarea, button, select { font-family: "PPDollar", "PPDigits", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
 html, body { overflow-x: hidden; overscroll-behavior: none; }
+
+:root { --pp-nav-active: oklch(0.93 0.03 255); }
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

@@ -66,7 +66,7 @@ function Index() {
 
       <main className="flex-1 px-4 pb-4">
         {/* Account cards row (horizontal scroll) */}
-        <div className="flex gap-3 overflow-x-auto -mx-4 px-4 pb-2 snap-x">
+        <div className="flex gap-3 overflow-x-auto -mx-4 px-4 pb-2 snap-x no-scrollbar">
           <AccountCard
             to="/add-money"
             icon={<img src={paypalPLogo} alt="PayPal" className="h-7 w-7 rounded-md object-contain" />}
