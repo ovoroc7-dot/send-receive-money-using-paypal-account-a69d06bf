@@ -104,7 +104,7 @@ function Index() {
           />
           <Link
             to="/crypto"
-            className="snap-start min-w-[46%] max-w-[80%] flex-1 flex rounded-2xl bg-white border border-[color:var(--border)] p-4 flex-col gap-2 overflow-hidden"
+            className="snap-start min-w-[46%] max-w-[80%] flex-1 flex rounded-2xl bg-white border border-[color:var(--border)] p-5 min-h-[168px] flex-col gap-3 overflow-hidden"
           >
             <p className="text-[14px] text-[var(--pp-text-muted)] truncate">Crypto</p>
             <p
@@ -113,7 +113,7 @@ function Index() {
             >
               {fmt(cryptoValue)}
             </p>
-            <div className="mt-3 text-[14px] truncate text-[var(--pp-link)] font-semibold">
+            <div className="mt-auto pt-6 text-[14px] truncate text-[var(--pp-link)] font-semibold">
               {cryptoValue > 0 ? "View" : "Buy"}
             </div>
           </Link>
@@ -246,7 +246,7 @@ function AccountCard({
   return (
     <Link
       to={to}
-      className="snap-start min-w-[46%] max-w-[80%] flex-1 rounded-2xl bg-white border border-[color:var(--border)] p-4 flex flex-col gap-2 overflow-hidden active:scale-[0.98] transition-transform"
+      className="snap-start min-w-[46%] max-w-[80%] flex-1 rounded-2xl bg-white border border-[color:var(--border)] p-5 min-h-[168px] flex flex-col gap-3 overflow-hidden active:scale-[0.98] transition-transform"
     >
       <p className="text-[14px] text-[var(--pp-text-muted)] truncate">{title}</p>
       <p
@@ -255,7 +255,7 @@ function AccountCard({
       >
         {amount}
       </p>
-      <div className="mt-3 text-[14px] truncate">{footer}</div>
+      <div className="mt-auto pt-6 text-[14px] truncate">{footer}</div>
     </Link>
   );
 }
