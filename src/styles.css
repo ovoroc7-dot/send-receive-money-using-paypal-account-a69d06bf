@@ -211,6 +211,6 @@ html, body, input, textarea, button, select { font-family: "PPDollar", "PPDigits
 
 html, body { overflow-x: hidden; overscroll-behavior: none; }
 
-:root { --pp-nav-active: oklch(0.93 0.03 255); }
+:root { --pp-nav-active: oklch(0.965 0.012 255); --pp-nav-blue: oklch(0.55 0.21 262); }
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
