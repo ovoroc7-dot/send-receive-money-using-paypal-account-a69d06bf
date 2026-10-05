@@ -16,7 +16,12 @@ const items = [
 export function BottomNav() {
   const { pathname } = useLocation();
   return (
-    <nav className="sticky bottom-0 left-0 right-0 z-30 bg-[var(--pp-card)] border-t border-[color:var(--border)] px-2 pt-2 pb-3">
+    <>
+    <div aria-hidden className="shrink-0" style={{ height: "calc(68px + env(safe-area-inset-bottom))" }} />
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-30 bg-[var(--pp-card)] border-t border-[color:var(--border)] px-2 pt-2 pb-3 overscroll-none select-none"
+      style={{ transform: "translate3d(0,0,0)", touchAction: "none", paddingBottom: "calc(12px + env(safe-area-inset-bottom))", willChange: "transform" }}
+    >
       <ul className="flex items-end justify-between">
         {items.map(({ to, label, icon }) => {
           const active = pathname === to;
@@ -60,5 +65,6 @@ export function BottomNav() {
         })}
       </ul>
     </nav>
+    </>
   );
 }
