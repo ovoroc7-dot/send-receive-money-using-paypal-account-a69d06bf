@@ -106,10 +106,7 @@ function Index() {
             to="/crypto"
             className="snap-start min-w-[46%] max-w-[80%] flex-1 flex rounded-2xl bg-white border border-[color:var(--border)] p-4 flex-col gap-2 overflow-hidden"
           >
-            <div className="h-7 w-7 rounded-full bg-[var(--pp-blue-light)] flex items-center justify-center text-white font-bold text-[13px]">
-              C
-            </div>
-            <p className="text-[14px] text-[var(--pp-text-muted)] mt-1 truncate">Crypto</p>
+            <p className="text-[14px] text-[var(--pp-text-muted)] truncate">Crypto</p>
             <p
               className="text-[24px] font-normal tracking-[-0.01em] text-[var(--pp-text)] leading-tight truncate"
               title={fmt(cryptoValue)}
@@ -251,8 +248,7 @@ function AccountCard({
       to={to}
       className="snap-start min-w-[46%] max-w-[80%] flex-1 rounded-2xl bg-white border border-[color:var(--border)] p-4 flex flex-col gap-2 overflow-hidden active:scale-[0.98] transition-transform"
     >
-      {icon}
-      <p className="text-[14px] text-[var(--pp-text-muted)] mt-1 truncate">{title}</p>
+      <p className="text-[14px] text-[var(--pp-text-muted)] truncate">{title}</p>
       <p
         className="text-[24px] font-normal tracking-[-0.01em] text-[var(--pp-text)] leading-tight truncate"
         title={amount}
