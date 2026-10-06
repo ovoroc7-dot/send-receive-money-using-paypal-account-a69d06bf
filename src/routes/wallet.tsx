@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, ChevronRight, HelpCircle } from "lucide-react";
+import { Plus, ChevronRight, CreditCard, Landmark, HandCoins, Banknote, ScanLine } from "lucide-react";
+import paypalPLogo from "@/assets/paypal-p-balance.jpeg";
 import { BottomNav } from "@/components/paypal/BottomNav";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
@@ -114,7 +115,6 @@ function WalletPage() {
         </Link>
 
         {/* Banks and cards */}
-        <SectionTitle>Banks and cards</SectionTitle>
         <div className="rounded-2xl bg-white border border-[color:var(--border)] divide-y divide-[color:var(--border)] overflow-hidden">
           <MethodRow
             mark={<MastercardMark />}
@@ -269,5 +269,16 @@ function SuttonMark() {
       <path d="M5 10 V18 M9 10 V18 M15 10 V18 M19 10 V18" />
       <path d="M3 19 H21" strokeLinecap="round" />
     </svg>
+  );
+}
+
+function QuickAction({ to, label, icon }: { to: string; label: string; icon: React.ReactNode }) {
+  return (
+    <Link to={to} className="w-[88px] shrink-0 flex flex-col items-center gap-3 text-center">
+      <span className="h-[72px] w-[72px] rounded-full bg-[var(--pp-bg)] flex items-center justify-center text-[var(--pp-blue-dark)]">
+        {icon}
+      </span>
+      <span className="text-[14px] leading-tight text-[var(--pp-text)]">{label}</span>
+    </Link>
   );
 }
