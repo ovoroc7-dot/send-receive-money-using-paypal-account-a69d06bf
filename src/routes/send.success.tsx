@@ -1,3 +1,4 @@
+import { saveRecipient } from "@/lib/savedRecipients";
 import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -40,6 +41,7 @@ function SuccessRoute() {
 function SuccessPage() {
   const navigate = useNavigate();
   const { to, amount, status } = useSearch({ from: "/send/success" });
+  useEffect(() => { if (to) saveRecipient(String(to)); }, [to]);
   const n = Number.parseFloat(amount) || 0;
   const recorded = useRef(false);
   const [notifyVisible, setNotifyVisible] = useState(false);

@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { getSavedRecipients } from "@/lib/savedRecipients";
 import { Search, ScanLine, Receipt, HandHeart, ChevronRight, Store, FileText } from "lucide-react";
 import { BottomNav } from "@/components/paypal/BottomNav";
 import { RequireAuth } from "@/auth/RequireAuth";
@@ -45,6 +46,8 @@ function PaymentsPage() {
   const [tab, setTab] = useState<Tab>("send");
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const [saved, setSaved] = useState<string[]>([]);
+  useEffect(() => setSaved(getSavedRecipients()), []);
 
   const isSend = tab === "send";
   const isRequest = tab === "request";
@@ -52,9 +55,15 @@ function PaymentsPage() {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return CONTACTS;
-    return CONTACTS.filter((c) => c.name.toLowerCase().includes(q));
-  }, [query]);
+    const savedContacts: Contact[] = saved.map((n) => ({
+      name: n,
+      initials: n.replace(/^@/, "").split(/[\s._@-]+/).filter(Boolean).slice(0, 2).map((p) => p[0]!.toUpperCase()).join("") || "?",
+      color: "var(--pp-blue-dark)",
+    }));
+    const all = [...savedContacts, ...CONTACTS.filter((c) => !saved.some((s) => s.toLowerCase() === c.name.toLowerCase()))];
+    if (!q) return all;
+    return all.filter((c) => c.name.toLowerCase().includes(q));
+  }, [query, saved]);
 
   const goAmount = (name: string) => {
     if (isRequest) navigate({ to: "/request/amount", search: { to: name } });
@@ -99,6 +108,8 @@ function PaymentsPage() {
                 <Search size={18} className="text-[var(--pp-text-muted)]" />
                 <input
                   value={query}
+                  onKeyDown={(e) => { if (e.key === "Enter" && query.trim()) goAmount(query.trim()); }}
+                  enterKeyHint="go"
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Name, @username, email, mo..."
                   className="flex-1 bg-transparent text-[14px] text-[var(--pp-text)] placeholder:text-[var(--pp-text-muted)] outline-none"
@@ -112,9 +123,26 @@ function PaymentsPage() {
               </button>
             </div>
 
-            <p className="mt-5 text-[15px] text-[var(--pp-text)]">Top contacts</p>
+            {query.trim() && (
+              <button
+                type="button"
+                onClick={() => goAmount(query.trim())}
+                className="mt-3 w-full flex items-center gap-3 rounded-xl bg-white border border-[color:var(--border)] px-4 py-3 text-left"
+              >
+                <span className="h-10 w-10 rounded-full bg-[var(--pp-blue-dark)] text-white font-bold flex items-center justify-center">
+                  {query.trim()[0]!.toUpperCase()}
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="block text-[15px] font-semibold text-[var(--pp-text)] truncate">{query.trim()}</span>
+                  <span className="block text-[12px] text-[var(--pp-text-muted)]">{isRequest ? "Request from" : "Send to"} this person</span>
+                </span>
+                <ChevronRight size={18} className="text-[var(--pp-text-muted)]" />
+              </button>
+            )}
+
+            <p className="mt-5 text-[15px] text-[var(--pp-text)]">{saved.length ? "Recent contacts" : "Top contacts"}</p>
             <div className="mt-3 flex items-center gap-5 overflow-x-auto pb-1">
-              {filtered.slice(0, 5).map((c) => (
+              {filtered.slice(0, 12).map((c) => (
                 <button
                   key={c.name}
                   onClick={() => goAmount(c.name)}
