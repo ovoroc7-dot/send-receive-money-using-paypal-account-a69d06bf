@@ -1,11 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, ChevronRight, CreditCard, Landmark, HandCoins, Banknote, ScanLine } from "lucide-react";
+import { Plus, ChevronRight } from "lucide-react";
+import walletIcon0 from "@/assets/wallet/icon-0.png";
+import walletIcon1 from "@/assets/wallet/icon-1.png";
+import walletIcon2 from "@/assets/wallet/icon-2.png";
+import walletIcon3 from "@/assets/wallet/icon-3.png";
+import walletIcon4 from "@/assets/wallet/icon-4.png";
+
 import paypalPLogo from "@/assets/paypal-p-balance.jpeg";
 import { BottomNav } from "@/components/paypal/BottomNav";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
 import { useSavings } from "@/auth/useSavings";
-import { PayPalLogo } from "@/components/paypal/PayPalLogo";
 
 export const Route = createFileRoute("/wallet")({
   component: () => (
@@ -51,11 +56,11 @@ function WalletPage() {
       {/* Quick actions */}
       <div className="bg-white -mx-0 py-5">
         <div className="flex gap-2 overflow-x-auto no-scrollbar px-3">
-          <QuickAction to="/finances" label="PayPal Debit Card" icon={<CreditCard className="h-7 w-7" strokeWidth={2.25} />} />
-          <QuickAction to="/link-account" label="Add banks and cards" icon={<Landmark className="h-7 w-7" strokeWidth={2.25} />} />
-          <QuickAction to="/add-money" label="Set up Direct Deposit" icon={<HandCoins className="h-7 w-7" strokeWidth={2.25} />} />
-          <QuickAction to="/add-money" label="Add cash at stores" icon={<Banknote className="h-7 w-7" strokeWidth={2.25} />} />
-          <QuickAction to="/add-money" label="Cash a Check" icon={<ScanLine className="h-7 w-7" strokeWidth={2.25} />} />
+          <QuickAction to="/finances" label="PayPal Debit Card" icon={<img src={walletIcon0} alt="" className="h-[62px] w-[62px] rounded-full object-cover" />} />
+          <QuickAction to="/link-account" label="Add banks and cards" icon={<img src={walletIcon1} alt="" className="h-[62px] w-[62px] rounded-full object-cover" />} />
+          <QuickAction to="/add-money" label="Set up Direct Deposit" icon={<img src={walletIcon2} alt="" className="h-[62px] w-[62px] rounded-full object-cover" />} />
+          <QuickAction to="/add-money" label="Add cash at stores" icon={<img src={walletIcon3} alt="" className="h-[62px] w-[62px] rounded-full object-cover" />} />
+          <QuickAction to="/add-money" label="Cash a Check" icon={<img src={walletIcon4} alt="" className="h-[62px] w-[62px] rounded-full object-cover" />} />
         </div>
       </div>
 
@@ -142,34 +147,6 @@ function WalletPage() {
             <Plus className="h-5 w-5 text-[var(--pp-blue-dark)]" strokeWidth={2.25} />
           </div>
           <span className="text-[15px] font-semibold text-[var(--pp-text)]">Link a bank or card</span>
-        </Link>
-
-        {/* PayPal Debit Card */}
-        <SectionTitle>PayPal Debit Card</SectionTitle>
-        <Link
-          to="/finances"
-          className="block rounded-2xl overflow-hidden"
-          style={{ background: "var(--pp-blue-dark)" }}
-        >
-          <div className="p-5 relative min-h-[170px] flex flex-col justify-between text-white">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wide opacity-80">
-                  PayPal Debit Card
-                </p>
-                <div className="mt-1">
-                  <PayPalLogo className="h-6 w-6" />
-                </div>
-              </div>
-              <MastercardMark large />
-            </div>
-            <div>
-              <p className="text-[13px] tracking-[0.3em] font-mono opacity-90">
-                •••• •••• •••• 7109
-              </p>
-              <p className="mt-1 text-[11px] opacity-70">Use your balance anywhere.</p>
-            </div>
-          </div>
         </Link>
 
         {/* Rewards */}
