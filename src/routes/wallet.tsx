@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, ChevronRight, HelpCircle } from "lucide-react";
+import { Plus, ChevronRight, CreditCard, Landmark, HandCoins, Banknote, ScanLine } from "lucide-react";
+import paypalPLogo from "@/assets/paypal-p-balance.jpeg";
 import { BottomNav } from "@/components/paypal/BottomNav";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
@@ -37,38 +38,55 @@ function WalletPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--pp-bg)]">
-      {/* Header */}
-      <header className="px-5 pt-6 pb-2 flex items-center justify-between">
-        <h1 className="text-[28px] font-bold text-[var(--pp-text)]">Wallet</h1>
-        <button aria-label="Help" className="text-[var(--pp-text)]">
-          <HelpCircle className="h-6 w-6" strokeWidth={1.75} />
-        </button>
+      {/* Tabs */}
+      <header className="px-4 pt-5 pb-4 flex items-center gap-2">
+        <span className="rounded-full bg-white shadow-sm px-6 py-3 text-[19px] font-bold text-[var(--pp-blue-dark)]">
+          Wallet
+        </span>
+        <Link to="/activity" className="px-4 py-3 text-[19px] text-[var(--pp-text)]">
+          Activity
+        </Link>
       </header>
 
-      <main className="flex-1 px-5 pb-8">
-        {/* Balance section */}
-        <section className="mt-3">
-          <p className="text-[15px] text-[var(--pp-text)]">PayPal balance</p>
-          <p className="mt-1 text-[36px] font-bold leading-none text-[var(--pp-text)] tracking-tight">
+      {/* Quick actions */}
+      <div className="bg-white -mx-0 py-5">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar px-3">
+          <QuickAction to="/finances" label="PayPal Debit Card" icon={<CreditCard className="h-7 w-7" strokeWidth={2.25} />} />
+          <QuickAction to="/link-account" label="Add banks and cards" icon={<Landmark className="h-7 w-7" strokeWidth={2.25} />} />
+          <QuickAction to="/add-money" label="Set up Direct Deposit" icon={<HandCoins className="h-7 w-7" strokeWidth={2.25} />} />
+          <QuickAction to="/add-money" label="Add cash at stores" icon={<Banknote className="h-7 w-7" strokeWidth={2.25} />} />
+          <QuickAction to="/add-money" label="Cash a Check" icon={<ScanLine className="h-7 w-7" strokeWidth={2.25} />} />
+        </div>
+      </div>
+
+      <main className="flex-1 px-4 pb-28">
+        {/* Balance card */}
+        <Link
+          to="/add-money"
+          className="mt-5 block rounded-2xl bg-white border border-[color:var(--border)] shadow-sm p-5 min-h-[200px]"
+        >
+          <div className="flex items-center gap-3">
+            <img src={paypalPLogo} alt="PayPal" className="h-8 w-8 object-contain" />
+            <span className="flex-1 text-[15px] text-[var(--pp-text)]">PayPal balance</span>
+            <span className="text-[15px] font-bold text-[var(--pp-text)]">{formatUsd(bal)}</span>
+          </div>
+          <p className="mt-10 text-[40px] font-normal tracking-[-0.01em] leading-none text-[var(--pp-text)]">
             {formatUsd(bal)}
           </p>
-          <div className="mt-4 flex gap-3">
-            <Link
-              to="/add-money"
-              className="flex-1 text-center rounded-full py-3 text-[15px] font-bold"
-              style={{ background: "var(--pp-blue-dark)", color: "white" }}
-            >
-              Add money
-            </Link>
-            <Link
-              to="/transfer/bank"
-              className="flex-1 text-center rounded-full py-3 text-[15px] font-bold border-2"
-              style={{ borderColor: "var(--pp-blue-dark)", color: "var(--pp-blue-dark)" }}
-            >
-              Transfer
-            </Link>
-          </div>
-        </section>
+        </Link>
+
+        {/* Banks and cards header */}
+        <div className="mt-8 mb-3 flex items-center justify-between">
+          <h2 className="text-[20px] text-[var(--pp-text)]">Banks and cards</h2>
+          <Link
+            to="/link-account"
+            search={{ returnTo: "/wallet" }}
+            aria-label="Add bank or card"
+            className="h-11 w-11 rounded-full bg-white shadow-sm flex items-center justify-center"
+          >
+            <Plus className="h-5 w-5 text-[var(--pp-blue-dark)]" strokeWidth={2.5} />
+          </Link>
+        </div>
 
         {/* PayPal Savings */}
         <SectionTitle>PayPal Savings</SectionTitle>
@@ -97,7 +115,6 @@ function WalletPage() {
         </Link>
 
         {/* Banks and cards */}
-        <SectionTitle>Banks and cards</SectionTitle>
         <div className="rounded-2xl bg-white border border-[color:var(--border)] divide-y divide-[color:var(--border)] overflow-hidden">
           <MethodRow
             mark={<MastercardMark />}
@@ -252,5 +269,16 @@ function SuttonMark() {
       <path d="M5 10 V18 M9 10 V18 M15 10 V18 M19 10 V18" />
       <path d="M3 19 H21" strokeLinecap="round" />
     </svg>
+  );
+}
+
+function QuickAction({ to, label, icon }: { to: string; label: string; icon: React.ReactNode }) {
+  return (
+    <Link to={to} className="w-[88px] shrink-0 flex flex-col items-center gap-3 text-center">
+      <span className="h-[72px] w-[72px] rounded-full bg-[var(--pp-bg)] flex items-center justify-center text-[var(--pp-blue-dark)]">
+        {icon}
+      </span>
+      <span className="text-[14px] leading-tight text-[var(--pp-text)]">{label}</span>
+    </Link>
   );
 }
