@@ -17,10 +17,10 @@ export function BottomNav() {
   const { pathname } = useLocation();
   return (
     <>
-    <div aria-hidden className="shrink-0" style={{ height: "calc(68px + env(safe-area-inset-bottom))" }} />
+    <div aria-hidden className="shrink-0" style={{ height: "calc(56px + max(4px, calc(env(safe-area-inset-bottom) - 14px)))" }} />
     <nav
       className="fixed bottom-0 left-0 right-0 z-30 bg-[var(--pp-bg)] px-2 pt-2 pb-3 overscroll-none select-none"
-      style={{ transform: "translate3d(0,0,0)", touchAction: "none", paddingBottom: "calc(12px + env(safe-area-inset-bottom))", willChange: "transform" }}
+      style={{ transform: "translate3d(0,0,0)", touchAction: "none", paddingBottom: "max(4px, calc(env(safe-area-inset-bottom) - 14px))", willChange: "transform" }}
     >
       <ul className="flex items-end justify-between">
         {items.map(({ to, label, icon }) => {
