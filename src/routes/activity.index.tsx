@@ -63,6 +63,10 @@ export function kindMeta(t: Txn): {
       return { title: "To PayPal Savings", sub: "Transfer", sign: -1, color: "var(--pp-text)", glyph: "$", bg: "oklch(0.95 0.08 90)" };
     case "transfer_money":
       return { title: "Transfer to bank", sub: "Transfer", sign: -1, color: "var(--pp-text)", glyph: "→", bg: "oklch(0.95 0.02 260)" };
+    case "crypto_send":
+      return { title: `To ${t.counterparty ?? "wallet"}`, sub: `Sent ${t.note ?? "crypto"}`, sign: -1, color: "var(--pp-text)", glyph: "₿", bg: "oklch(0.93 0.08 65)" };
+    case "crypto_receive":
+      return { title: `From ${t.counterparty ?? "wallet"}`, sub: `Received ${t.note ?? "crypto"}`, sign: 1, color: "var(--pp-success)", glyph: "₿", bg: "oklch(0.93 0.08 65)" };
     default:
       return { title: t.kind, sub: "", sign: 0, color: "var(--pp-text)", glyph: "•", bg: "oklch(0.95 0.02 260)" };
   }

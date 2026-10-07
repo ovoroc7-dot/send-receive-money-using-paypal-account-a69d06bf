@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, Check } from "lucide-react";
+import { logCryptoActivity } from "@/lib/cryptoActivity";
 import { CoinIcon } from "@/components/paypal/CoinIcon";
 import { findCoin, formatCrypto, formatUsd, useCryptoHoldings } from "@/auth/useCrypto";
 
@@ -99,7 +100,7 @@ function SendCrypto() {
           onClick={() => {
             if (step === "to") setStep("amount");
             else if (step === "amount") setStep("review");
-            else { sell(coin.symbol, units); setStep("done"); }
+            else { sell(coin.symbol, units); void logCryptoActivity("crypto_send", amt, formatCrypto(units, coin.symbol), to.trim()); setStep("done"); }
           }}
           className="w-full rounded-full bg-[var(--pp-blue-dark)] py-4 text-[17px] font-bold text-white disabled:opacity-40"
         >
