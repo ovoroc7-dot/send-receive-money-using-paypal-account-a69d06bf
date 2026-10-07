@@ -2,7 +2,8 @@ import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router"
 import { useState } from "react";
 import { ArrowLeft, Copy, Check } from "lucide-react";
 import { CoinIcon } from "@/components/paypal/CoinIcon";
-import { findCoin, walletAddress } from "@/auth/useCrypto";
+import { findCoin, walletAddress, formatCrypto, useCryptoHoldings } from "@/auth/useCrypto";
+import { logCryptoActivity } from "@/lib/cryptoActivity";
 import { useAuth } from "@/auth/AuthProvider";
 
 export const Route = createFileRoute("/crypto/receive/$symbol")({
@@ -16,6 +17,10 @@ function ReceiveCrypto() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
+  const { receive } = useCryptoHoldings();
+  const [from, setFrom] = useState("");
+  const [usd, setUsd] = useState("");
+  const [got, setGot] = useState("");
   if (!coin) return <p className="p-6">Coin not found.</p>;
   const addr = walletAddress(coin.symbol, user?.id ?? "guest");
 
@@ -60,6 +65,22 @@ function ReceiveCrypto() {
         >
           {copied ? <Check size={18} /> : <Copy size={18} />} {copied ? "Copied" : "Copy address"}
         </button>
+        <div className="mt-8 w-full rounded-2xl bg-white border border-[color:var(--border)] p-4 space-y-3">
+          <p className="text-[15px] font-semibold text-[var(--pp-text)]">Record incoming {coin.symbol}</p>
+          <input value={from} onChange={(e) => setFrom(e.target.value.slice(0, 120))} placeholder="From (name or address)" className="w-full h-11 rounded-xl border border-[color:var(--border)] px-3 text-[14px] outline-none bg-transparent text-[var(--pp-text)]" />
+          <input value={usd} inputMode="decimal" onChange={(e) => setUsd(e.target.value.replace(/[^0-9.]/g, "").slice(0, 10))} placeholder="Amount in USD" className="w-full h-11 rounded-xl border border-[color:var(--border)] px-3 text-[14px] outline-none bg-transparent text-[var(--pp-text)]" />
+          <button
+            disabled={!from.trim() || !(Number(usd) > 0)}
+            onClick={() => {
+              const amt = Number(usd); const units = amt / coin.price;
+              receive(coin.symbol, units);
+              void logCryptoActivity("crypto_receive", amt, formatCrypto(units, coin.symbol), from.trim());
+              setGot(`You received ${formatCrypto(units, coin.symbol)}`); setFrom(""); setUsd("");
+            }}
+            className="w-full rounded-full bg-[var(--pp-blue-dark)] py-3 text-[15px] font-bold text-white disabled:opacity-40"
+          >Receive</button>
+          {got && <p className="text-[13px] text-[var(--pp-success)] text-center">{got}</p>}
+        </div>
         <p className="mt-6 text-center text-[12px] text-[var(--pp-text-muted)]">Only send {coin.symbol} to this address. Sending other coins may result in permanent loss.</p>
       </main>
     </div>
