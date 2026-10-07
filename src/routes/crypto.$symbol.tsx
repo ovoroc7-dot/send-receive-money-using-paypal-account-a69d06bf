@@ -47,7 +47,7 @@ function CoinDetail() {
         </button>
       </header>
 
-      <main className="flex-1 px-5 pb-36">
+      <main className="flex-1 px-5 pb-52">
         {/* Price */}
         <div className="mt-4">
           <p className="text-[13px] text-[var(--pp-text-muted)]">{coin.symbol} price</p>
@@ -109,6 +109,21 @@ function CoinDetail() {
 
       {/* CTA */}
       <div className="fixed bottom-0 left-0 right-0 px-4 pb-5 pt-3 bg-[var(--pp-bg)] border-t border-[color:var(--border)]">
+        <div className="grid grid-cols-2 gap-3 mb-3">
+          <button
+            disabled={units <= 0}
+            onClick={() => navigate({ to: "/crypto/send/$symbol", params: { symbol: coin.symbol } })}
+            className="rounded-full bg-white border border-[var(--pp-blue-dark)] py-3 text-[var(--pp-blue-dark)] text-[15px] font-bold disabled:opacity-40"
+          >
+            Send
+          </button>
+          <button
+            onClick={() => navigate({ to: "/crypto/receive/$symbol", params: { symbol: coin.symbol } })}
+            className="rounded-full bg-white border border-[var(--pp-blue-dark)] py-3 text-[var(--pp-blue-dark)] text-[15px] font-bold"
+          >
+            Receive
+          </button>
+        </div>
         <div className="grid grid-cols-2 gap-3">
           <button
             disabled={units <= 0}

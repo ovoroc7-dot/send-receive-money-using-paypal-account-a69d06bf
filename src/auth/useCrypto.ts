@@ -70,5 +70,14 @@ export function useCryptoHoldings() {
 
   const totalValue = COINS.reduce((sum, c) => sum + (holdings[c.symbol] ?? 0) * c.price, 0);
 
-  return { holdings, buy, sell, totalValue };
+  return { holdings, buy, sell, receive: buy, totalValue };
+}
+
+export function walletAddress(symbol: string, seed: string) {
+  let h = 0;
+  for (const ch of seed + symbol) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const abc = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+  let out = "";
+  for (let i = 0; i < 38; i++) { h = (h * 1103515245 + 12345) >>> 0; out += abc[h % 32]; }
+  return (symbol === "BTC" ? "bc1q" : "0x") + out;
 }

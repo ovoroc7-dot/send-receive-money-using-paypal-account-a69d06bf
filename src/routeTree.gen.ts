@@ -43,7 +43,9 @@ import { Route as AddMoneySuccessRouteImport } from './routes/add-money.success'
 import { Route as AddMoneyReviewRouteImport } from './routes/add-money.review'
 import { Route as AddMoneyMethodRouteImport } from './routes/add-money.method'
 import { Route as ActivityIdRouteImport } from './routes/activity.$id'
+import { Route as CryptoSendSymbolRouteImport } from './routes/crypto.send.$symbol'
 import { Route as CryptoSellSymbolRouteImport } from './routes/crypto.sell.$symbol'
+import { Route as CryptoReceiveSymbolRouteImport } from './routes/crypto.receive.$symbol'
 import { Route as CryptoBuySymbolRouteImport } from './routes/crypto.buy.$symbol'
 
 const WalletRoute = WalletRouteImport.update({
@@ -216,9 +218,19 @@ const ActivityIdRoute = ActivityIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ActivityRoute,
 } as any)
+const CryptoSendSymbolRoute = CryptoSendSymbolRouteImport.update({
+  id: '/send/$symbol',
+  path: '/send/$symbol',
+  getParentRoute: () => CryptoRoute,
+} as any)
 const CryptoSellSymbolRoute = CryptoSellSymbolRouteImport.update({
   id: '/sell/$symbol',
   path: '/sell/$symbol',
+  getParentRoute: () => CryptoRoute,
+} as any)
+const CryptoReceiveSymbolRoute = CryptoReceiveSymbolRouteImport.update({
+  id: '/receive/$symbol',
+  path: '/receive/$symbol',
   getParentRoute: () => CryptoRoute,
 } as any)
 const CryptoBuySymbolRoute = CryptoBuySymbolRouteImport.update({
@@ -263,7 +275,9 @@ export interface FileRoutesByFullPath {
   '/security-check/': typeof SecurityCheckIndexRoute
   '/send/': typeof SendIndexRoute
   '/crypto/buy/$symbol': typeof CryptoBuySymbolRoute
+  '/crypto/receive/$symbol': typeof CryptoReceiveSymbolRoute
   '/crypto/sell/$symbol': typeof CryptoSellSymbolRoute
+  '/crypto/send/$symbol': typeof CryptoSendSymbolRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -297,7 +311,9 @@ export interface FileRoutesByTo {
   '/security-check': typeof SecurityCheckIndexRoute
   '/send': typeof SendIndexRoute
   '/crypto/buy/$symbol': typeof CryptoBuySymbolRoute
+  '/crypto/receive/$symbol': typeof CryptoReceiveSymbolRoute
   '/crypto/sell/$symbol': typeof CryptoSellSymbolRoute
+  '/crypto/send/$symbol': typeof CryptoSendSymbolRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -336,7 +352,9 @@ export interface FileRoutesById {
   '/security-check/': typeof SecurityCheckIndexRoute
   '/send/': typeof SendIndexRoute
   '/crypto/buy/$symbol': typeof CryptoBuySymbolRoute
+  '/crypto/receive/$symbol': typeof CryptoReceiveSymbolRoute
   '/crypto/sell/$symbol': typeof CryptoSellSymbolRoute
+  '/crypto/send/$symbol': typeof CryptoSendSymbolRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -376,7 +394,9 @@ export interface FileRouteTypes {
     | '/security-check/'
     | '/send/'
     | '/crypto/buy/$symbol'
+    | '/crypto/receive/$symbol'
     | '/crypto/sell/$symbol'
+    | '/crypto/send/$symbol'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -410,7 +430,9 @@ export interface FileRouteTypes {
     | '/security-check'
     | '/send'
     | '/crypto/buy/$symbol'
+    | '/crypto/receive/$symbol'
     | '/crypto/sell/$symbol'
+    | '/crypto/send/$symbol'
   id:
     | '__root__'
     | '/'
@@ -448,7 +470,9 @@ export interface FileRouteTypes {
     | '/security-check/'
     | '/send/'
     | '/crypto/buy/$symbol'
+    | '/crypto/receive/$symbol'
     | '/crypto/sell/$symbol'
+    | '/crypto/send/$symbol'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -716,11 +740,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActivityIdRouteImport
       parentRoute: typeof ActivityRoute
     }
+    '/crypto/send/$symbol': {
+      id: '/crypto/send/$symbol'
+      path: '/send/$symbol'
+      fullPath: '/crypto/send/$symbol'
+      preLoaderRoute: typeof CryptoSendSymbolRouteImport
+      parentRoute: typeof CryptoRoute
+    }
     '/crypto/sell/$symbol': {
       id: '/crypto/sell/$symbol'
       path: '/sell/$symbol'
       fullPath: '/crypto/sell/$symbol'
       preLoaderRoute: typeof CryptoSellSymbolRouteImport
+      parentRoute: typeof CryptoRoute
+    }
+    '/crypto/receive/$symbol': {
+      id: '/crypto/receive/$symbol'
+      path: '/receive/$symbol'
+      fullPath: '/crypto/receive/$symbol'
+      preLoaderRoute: typeof CryptoReceiveSymbolRouteImport
       parentRoute: typeof CryptoRoute
     }
     '/crypto/buy/$symbol': {
@@ -770,7 +808,9 @@ interface CryptoRouteChildren {
   CryptoSuccessRoute: typeof CryptoSuccessRoute
   CryptoIndexRoute: typeof CryptoIndexRoute
   CryptoBuySymbolRoute: typeof CryptoBuySymbolRoute
+  CryptoReceiveSymbolRoute: typeof CryptoReceiveSymbolRoute
   CryptoSellSymbolRoute: typeof CryptoSellSymbolRoute
+  CryptoSendSymbolRoute: typeof CryptoSendSymbolRoute
 }
 
 const CryptoRouteChildren: CryptoRouteChildren = {
@@ -778,7 +818,9 @@ const CryptoRouteChildren: CryptoRouteChildren = {
   CryptoSuccessRoute: CryptoSuccessRoute,
   CryptoIndexRoute: CryptoIndexRoute,
   CryptoBuySymbolRoute: CryptoBuySymbolRoute,
+  CryptoReceiveSymbolRoute: CryptoReceiveSymbolRoute,
   CryptoSellSymbolRoute: CryptoSellSymbolRoute,
+  CryptoSendSymbolRoute: CryptoSendSymbolRoute,
 }
 
 const CryptoRouteWithChildren =
