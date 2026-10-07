@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeftRight, X, Database, Globe2 } from "lucide-react";
 import { BottomNav } from "@/components/paypal/BottomNav";
+import { FinancesCrypto } from "@/components/paypal/FinancesCrypto";
 import { RecentActivity } from "@/components/paypal/RecentActivity";
 import { RequireAuth } from "@/auth/RequireAuth";
 import { useBalance } from "@/auth/useBalance";
@@ -79,6 +80,7 @@ function FinancesPage() {
           })}
         </div>
 
+        {tab === "Crypto" ? <FinancesCrypto /> : (<>
         {/* Total balance */}
         <div className="mt-7 w-full overflow-hidden">
           <p className="text-[15px] text-[var(--pp-text)]">{displayLabel}</p>
@@ -193,6 +195,7 @@ function FinancesPage() {
         </div>
         <RecentActivity />
 
+        </>)}
       </main>
 
       {/* Transfer Money bottom sheet */}
